@@ -5,37 +5,54 @@ var ExtractTextPlugin = require("extract-text-webpack-plugin")
 var HtmlWebpackPlugin = require('html-webpack-plugin')
 module.exports = {
   entry:  {
-    index:'./main.jsx'
+    index:'./main.jsx',
+    vendor: ['react']
   },
   output: {
     path: path.resolve(__dirname+'/dist'),
-    filename: '[name].js'
+    filename: '[name].js',
+    publicPath: '/'
   },
   module: {
-    loaders:[
+    rules: [
       {
-        test: /\.css$/,
-        loader: ExtractTextPlugin.extract({
-          fallback: "style-loader",
-          use: "css-loader"
-        })
+          test: /\.jsx?$/,
+          loader: 'babel-loader',
+          exclude: /node_modules/,
+          options: {
+              presets: ['es2015','react']
+          }
       },
+      //css压缩必须分开写
       {
-            test: /\.(png|jpg)$/,
-            loader: 'url-loader',
-            query: {
-                limit: 10000,
-                name:'img/[name].[hash:7].[ext]'
-            }
-      },
-      {
-        test: /\.jsx$/,
-        exclude: /node_modules/,
-        loader: 'babel-loader',//在webpack的module部分的loaders里进行配置即可
-        query: {
-          presets: ['es2015','react']
-        }
+         test: /\.css$/,
+         use: ExtractTextPlugin.extract({
+             fallback: "style-loader",
+             use:[
+                 {
+                     loader: 'css-loader',
+                     options:{
+                         minimize: true //css压缩
+                     }
+                 }
+             ]
+         })
+     },
+     {
+         test: /\.scss$/,
+         use: ExtractTextPlugin.extract({
+             fallback: 'style-loader',
+             use: ['css-loader', 'sass-loader']
+         })
+     },
+    {
+      test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
+      loader: 'url-loader',
+      query: {
+        limit: 100000
       }
+    }
+
     ]
   },
   plugins: [
