@@ -1,1 +1,1 @@
-body{background-color:blue}h1,span{color:red}div{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex}
+span{display:inline-block;width:200px;height:300px}body{background-color:blue}h1,span{color:red}div{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex}
