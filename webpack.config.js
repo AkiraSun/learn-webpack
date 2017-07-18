@@ -55,7 +55,8 @@ module.exports = {
         test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
         loader: 'url-loader',
         query: {
-          limit: 100000
+          limit: 8192,//8192以下的压缩变成base64
+          name: './img/[hash].[ext]'//不压缩生成图片路径
         }
       }
 

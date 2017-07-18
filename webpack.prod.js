@@ -11,7 +11,7 @@ module.exports = {
   output: {
     path: path.resolve(__dirname+'/dist'),
     filename: '[name].js',
-    publicPath: '/'
+    // publicPath: '/'//在打包文件下面不能写绝对路径
   },
   module: {
     rules: [
@@ -47,8 +47,8 @@ module.exports = {
       test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
       loader: 'url-loader',
       query: {
-        limit: 100000,
-        name: '/img/[name]-[hash:8].[ext]'
+        limit: 8192,//8192以下的压缩变成base64
+        name: './img/[hash].[ext]'//不压缩生成图片路径
       }
     }
 
