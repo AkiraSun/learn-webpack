@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "webpack-dev-server",
-    "build": "webpack --config ./webpack.prod.js --progress"
+    "build": "webpack -p  --config ./webpack.prod.js --progress"
   },
   "repository": {
     "type": "git",
@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/AkiraSun/learn-webpack#readme",
   "devDependencies": {
+    "autoprefixer": "^7.1.2",
     "babel-core": "^6.25.0",
     "babel-loader": "^7.1.1",
     "babel-preset-env": "^1.6.0",

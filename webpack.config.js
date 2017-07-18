@@ -32,24 +32,23 @@ module.exports = {
       },
       //css压缩必须分开写
       {
-           test: /\.css$/,
+           test: /\.css|scss$/,
            use: ExtractTextPlugin.extract({
                fallback: "style-loader",
                use:[
-                   {
-                       loader: 'css-loader',
-                       options:{
-                           minimize: true //css压缩
-                       }
-                   }
-               ]
-           })
-       },
-       {
-           test: /\.scss$/,
-           use: ExtractTextPlugin.extract({
-               fallback: 'style-loader',
-               use: ['css-loader', 'sass-loader']
+                     {
+                        loader: 'css-loader',
+                        options: {
+                          minimize: true //css压缩
+                        }
+                      },
+                      {
+                        loader: 'postcss-loader'//要配置postcssconfig
+                      },
+                      {
+                        loader: 'sass-loader'
+                      }
+                   ]
            })
        },
       {
@@ -90,7 +89,7 @@ module.exports = {
   },
   plugins: [
     new webpack.HotModuleReplacementPlugin(),//热加载插件
-    new HtmlWebpackPlugin(),//把html文件插入dist
-    new ExtractTextPlugin("[name].css")//css文件也可以合并到一个文件中
+    //new HtmlWebpackPlugin(),//把html文件动态插入dist,配置脚麻烦，一般用手黏贴
+    new ExtractTextPlugin("app.css")//css文件也可以合并到一个文件中
   ]
 };

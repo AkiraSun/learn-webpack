@@ -23,33 +23,32 @@ module.exports = {
               presets: ['es2015','react']
           }
       },
-      //css压缩必须分开写
       {
-         test: /\.css$/,
-         use: ExtractTextPlugin.extract({
-             fallback: "style-loader",
-             use:[
-                 {
-                     loader: 'css-loader',
-                     options:{
-                         minimize: true //css压缩
-                     }
-                 }
-             ]
-         })
-     },
-     {
-         test: /\.scss$/,
-         use: ExtractTextPlugin.extract({
-             fallback: 'style-loader',
-             use: ['css-loader', 'sass-loader']
-         })
-     },
+           test: /\.css|scss$/,
+           use: ExtractTextPlugin.extract({
+               fallback: "style-loader",
+               use:[
+                     {
+                        loader: 'css-loader',
+                        options: {
+                          minimize: true //css压缩
+                        }
+                      },
+                      {
+                        loader: 'postcss-loader'
+                      },
+                      {
+                        loader: 'sass-loader'
+                      }
+               ]
+           })
+       },
     {
       test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
       loader: 'url-loader',
       query: {
-        limit: 100000
+        limit: 100000,
+        name: '/img/[name]-[hash:8].[ext]'
       }
     }
 
@@ -61,8 +60,8 @@ module.exports = {
         warnings: false
       }
     }),
-    new ExtractTextPlugin("app.css"),
+    // new HtmlWebpackPlugin(),
+    new ExtractTextPlugin("app.css")
     //自动生产html到dist
-    new HtmlWebpackPlugin()
   ]
 };
